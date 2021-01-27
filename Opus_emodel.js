@@ -190,3 +190,103 @@ cbr:[{
 
 }
 
+/*getEffective(bandwidth,mode,lossType) takes the following inputs to compute Ie,eff facotr for SWB/WB/NB codecs.
+bandwidth: 'swb': for SWB E-model
+           'wb': WB E-model
+           'nb': NB E-model
+mode: Opus operating mode
+        'VBR': for the default Opus Variable bitrate operating mode
+        'CBR': for the Constant bitrate operating mode
+lossType: The type of loss, i.e. "random" or "bursty" loss patterns
+*/
+// it takes bandwidth, operating mode, and the type of packet loss
+window.getEffective =function(bandwidth,mode,lossType){
+        //filtering the arguments passed based on the Emodel implementation being used
+        // starts by SWB
+        if(bandwidth==="swb"){
+            //checks if the vbr or cbr mode is being evaluated
+            if(mode==="vbr"){swbBitrates = swbVbrBitrates; }
+            if(mode==="cbr"){swbBitrates = swbCbrBitrates; }
+            
+            //After this point, the code returns all the ie & Bpl factors by looping through the codec configuration decalred above
+            const result = swbBitrates.map(id => { //filters through each swb bitrate decalred
+          
+            const [tempVar] = swb[mode].filter(bitrateobj => {//filters the bitrate Object containing the ie anb Bpl based on the lossType
+              return bitrateobj.id === id
+          });
+          
+          let ie;
+          if((mode==="vbr" || mode==="cbr") && (typeof(lossType)==="undefined")){//if no packet lossType detected,return ie only.
+              ie = tempVar.value[0].ie;
+    }
+          let bpl=1;
+          
+          if((mode==="vbr" || mode==="cbr") && (lossType==="random" || lossType==="bursty")) { //if packet lossType is present (random/bursty)
+              ie = tempVar.value[0].ie;
+              bpl = tempVar.value[0]["bpl"+lossType];
+          }
+          return {//
+              bitrate:id,
+              ie:ie,
+              bpl:bpl
+          }
+      }) 
+         return result;// returns  ie and Bpl for every swb condition to be processed by the R-factor Equation.
+    }
+        //computes the WB factors using the same approach used for the SWB conditions above
+        if(bandwidth==="wb"){
+        if(mode==="vbr"){wbBitrates = wbVbrBitrates; }
+        if(mode==="cbr"){wbBitrates = wbCbrBitrates; }
+        
+            const result = wbBitrates.map(id => {
+            const [tempVar] = wb[mode].filter(bitrateobj => {
+              return bitrateobj.id === id
+          });
+          
+          let ie;
+          if((mode==="vbr" || mode==="cbr") && (typeof(lossType)==="undefined")){//if no packet lossType detected.
+              ie = tempVar.value[0].ie;
+    }
+          let bpl=1;
+          
+          if((mode==="vbr" || mode==="cbr") && (lossType==="random" || lossType==="bursty")) { //if packet lossType is present (random/bursty)
+              ie = tempVar.value[0].ie;
+              bpl = tempVar.value[0]["bpl"+lossType];
+          }
+          return {
+              bitrate:id,
+              ie:ie,
+              bpl:bpl
+          }
+      }) 
+          return result;
+    }
+        //computes the NB factors using the same approach used for the SWB conditions above
+        if(bandwidth==="nb"){
+        if(mode==="vbr"){nbBitrates = nbVbrBitrates; }
+        if(mode==="cbr"){nbBitrates = nbCbrBitrates; }
+        
+            const result = nbBitrates.map(id => {
+            const [tempVar] = nb[mode].filter(bitrateobj => {
+              return bitrateobj.id === id
+          });
+          
+          let ie;
+          if((mode==="vbr" || mode==="cbr") && (typeof(lossType)==="undefined")){//if no packet lossType detected.
+              ie = tempVar.value[0].ie;
+    }
+          let bpl=1;
+          
+          if((mode==="vbr" || mode==="cbr") && (lossType==="random" || lossType==="bursty")) { //if packet lossType is present (random/bursty)
+              ie = tempVar.value[0].ie;
+              bpl = tempVar.value[0]["bpl"+lossType];
+          }
+          return {
+              bitrate:id,
+              ie:ie,
+              bpl:bpl
+          }
+      }) 
+          return result;
+    }
+            }
