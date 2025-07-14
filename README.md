@@ -188,6 +188,14 @@ npm run test:coverage
 npm run test:watch
 ```
 
+## Citation
+
+If you use this library in your research or applications, please cite:
+
+```
+Alahmadi, M., Pocta, P., & Melvin, H. (2021). An Adaptive Bitrate Switching Algorithm for Speech Applications in Context of WebRTC. ACM Transactions on Multimedia Computing, Communications, and Applications, 17(4), Article 133. https://doi.org/10.1145/3458751
+```
+
 ## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
