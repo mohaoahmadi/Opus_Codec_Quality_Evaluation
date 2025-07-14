@@ -1,0 +1,43 @@
+{
+  "name": "opus-codec-quality-evaluation",
+  "version": "2.0.0",
+  "description": "ITU-T E-model implementation for Opus codec quality evaluation with Ie and Bpl factors for SWB, WB, and NB configurations",
+  "main": "Opus_emodel.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:verbose": "jest --verbose",
+    "test:ci": "jest --ci --coverage --watchAll=false",
+    "lint": "eslint *.js __tests__/**/*.js",
+    "lint:fix": "eslint *.js __tests__/**/*.js --fix"
+  },
+  "keywords": [
+    "opus",
+    "codec",
+    "quality",
+    "evaluation",
+    "e-model",
+    "telecommunications",
+    "voice",
+    "audio",
+    "itut",
+    "packet-loss",
+    "bandwidth"
+  ],
+  "author": "Mohannad Alahmadi",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "eslint": "^8.57.0",
+    "@jest/globals": "^29.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/Opus_Codec_Quality_Evaluation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/username/Opus_Codec_Quality_Evaluation/issues"
+  },
+  "homepage": "https://github.com/username/Opus_Codec_Quality_Evaluation#readme"
+}
